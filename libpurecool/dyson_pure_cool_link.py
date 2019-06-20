@@ -9,6 +9,7 @@ import socket
 from threading import Thread
 from queue import Queue, Empty
 
+import pprint
 
 import paho.mqtt.client as mqtt
 
@@ -93,20 +94,25 @@ class DysonPureCoolLink(DysonDevice):
                 device_msg = DysonPureCoolState(payload)
             if not userdata.device_available:
                 userdata.state_data_available()
+
             userdata.state = device_msg
+
             for function in userdata.callback_message:
                 function(device_msg)
-        elif DysonEnvironmentalSensorState.is_environmental_state_message(
-                payload):
+
+        elif DysonEnvironmentalSensorState.is_environmental_state_message(payload):
             if is_pure_cool_v2(userdata.product_type):
                 device_msg = DysonEnvironmentalSensorV2State(payload)
             if is_pure_hotcool_v2(userdata.product_type):
                 device_msg = DysonEnvironmentalSensorV2State(payload)
             else:
                 device_msg = DysonEnvironmentalSensorState(payload)
+
             if not userdata.device_available:
                 userdata.sensor_data_available()
+
             userdata.environmental_state = device_msg
+
             for function in userdata.callback_message:
                 function(device_msg)
         else:
@@ -169,8 +175,11 @@ class DysonPureCoolLink(DysonDevice):
             self._request_thread.start()
 
             # Wait for first data
-            self._state_data_available.get()
-            self._sensor_data_available.get()
+           # print("before_sensor_data")
+           # selif._sensor_data_available.get()
+           # print("before_state_data")
+           # self._state_data_available.get()
+           # print("after_all_data")
             self._device_available = True
         else:
             self._mqtt.loop_stop()

@@ -12,7 +12,7 @@ def support_heating(product_type):
 
     :param product_type Dyson device model
     """
-    if product_type in [DYSON_PURE_HOT_COOL_LINK_TOUR]:
+    if product_type in [DYSON_PURE_HOT_COOL_LINK_TOUR, DYSON_PURE_HOT_COOL_LINK_V2]:
         return True
     return False
 
