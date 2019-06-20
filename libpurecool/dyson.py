@@ -86,7 +86,7 @@ class DysonAccount:
                 if is_dyson_pure_cool_device(device_v2):
                     devices.append(DysonPureCool(device_v2))
                 elif is_pure_hotcool_v2(device_v2):
-                    devices.append(DysonPureCool(device_v2))
+                    devices.append(DysonPureHotCoolLink(device_v2))
 
             return devices
 
