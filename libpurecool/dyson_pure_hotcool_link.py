@@ -2,13 +2,13 @@
 
 import logging
 
-from .dyson_pure_cool_link import DysonPureCoolLink
+from .dyson_pure_cool import DysonPureCool
 from .utils import printable_fields
 
 _LOGGER = logging.getLogger(__name__)
 
 
-class DysonPureHotCoolLink(DysonPureCoolLink):
+class DysonPureHotCoolLink(DysonPureCool):
     """Dyson Pure Hot+Cool device."""
 
     def _parse_command_args(self, **kwargs):
