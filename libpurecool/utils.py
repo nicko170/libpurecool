@@ -3,7 +3,8 @@ import json
 import base64
 from Crypto.Cipher import AES
 from .const import DYSON_PURE_HOT_COOL_LINK_TOUR, \
-    DYSON_360_EYE, DYSON_PURE_COOL, DYSON_PURE_COOL_DESKTOP
+    DYSON_360_EYE, DYSON_PURE_COOL, DYSON_PURE_COOL_DESKTOP, \
+    DYSON_PURE_HOT_COOL_LINK_V2
 
 
 def support_heating(product_type):
@@ -25,13 +26,17 @@ def is_pure_cool_v2(product_type):
         return True
     return False
 
+def is_pure_hotcool_v2(json_payload):
+    """Return true if this json payload is a pure hot+cool v2 (HP04) device."""
+    if json_payload['ProductType'] in [DYSON_PURE_HOT_COOL_LINK_V2]:
+        return True
+    return False
 
 def is_heating_device(json_payload):
     """Return true if this json payload is a hot+cool device."""
     if json_payload['ProductType'] in [DYSON_PURE_HOT_COOL_LINK_TOUR]:
         return True
     return False
-
 
 def printable_fields(fields):
     """Return printable fields.

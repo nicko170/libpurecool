@@ -15,7 +15,7 @@ import paho.mqtt.client as mqtt
 from .dyson_pure_state_v2 import \
     DysonEnvironmentalSensorV2State, DysonPureCoolV2State
 from .dyson_device import DysonDevice, NetworkDevice, DEFAULT_PORT
-from .utils import printable_fields, support_heating, is_pure_cool_v2
+from .utils import printable_fields, support_heating, is_pure_cool_v2, is_pure_hotcool_v2
 from .dyson_pure_state import DysonPureHotCoolState, DysonPureCoolState, \
     DysonEnvironmentalSensorState
 from .zeroconf import ServiceBrowser, Zeroconf
@@ -87,6 +87,8 @@ class DysonPureCoolLink(DysonDevice):
                 device_msg = DysonPureHotCoolState(payload)
             elif is_pure_cool_v2(userdata.product_type):
                 device_msg = DysonPureCoolV2State(payload)
+            elif is_pure_hotcool_v2(userdata.product_type):
+                device_msg = DysonPureCoolV2State(payload)
             else:
                 device_msg = DysonPureCoolState(payload)
             if not userdata.device_available:
@@ -97,6 +99,8 @@ class DysonPureCoolLink(DysonDevice):
         elif DysonEnvironmentalSensorState.is_environmental_state_message(
                 payload):
             if is_pure_cool_v2(userdata.product_type):
+                device_msg = DysonEnvironmentalSensorV2State(payload)
+            if is_pure_hotcool_v2(userdata.product_type):
                 device_msg = DysonEnvironmentalSensorV2State(payload)
             else:
                 device_msg = DysonEnvironmentalSensorState(payload)
